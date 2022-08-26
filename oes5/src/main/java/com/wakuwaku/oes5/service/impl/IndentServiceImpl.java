@@ -5,6 +5,8 @@ import com.wakuwaku.oes5.entity.Indent;
 import com.wakuwaku.oes5.mapper.IndentMapper;
 import com.wakuwaku.oes5.service.IIndentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wakuwaku.oes5.service.ILessonService;
+import com.wakuwaku.oes5.service.IUserService;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,22 @@ public class IndentServiceImpl extends ServiceImpl<IndentMapper, Indent> impleme
 
     @Resource
     IndentMapper indentMapper;
+    @Resource
+    IUserService userService;
+    @Resource
+    ILessonService lessonService;
 
     @Override
-    public Indent createIndent(Integer uid, Integer lid) {
+    public Indent createIndent(Integer uid, Integer lid, boolean bought) {
 
         Indent indent = new Indent();
+        indent.setInStuID(uid);
+        indent.setInStuUsername(userService.getById(uid).getUsername());
+        indent.setInlid(lid);
+        indent.setInlName(lessonService.getById(lid).getLName());
+        indent.setInTeaID(lessonService.getById(lid).getLuid());
+        indent.setInTeaUsername(lessonService.getById(lid).getLuName());
+        indent.setInState(bought);
         return indent;
 
     }

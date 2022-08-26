@@ -1,11 +1,14 @@
 package com.wakuwaku.oes5.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -46,14 +49,14 @@ public class User implements Serializable {
     /**
      * 注册时间
      */
-    @TableField("uRegiTime")
-    private LocalDateTime uRegiTime;
+    @TableField(value = "uRegiTime", fill = FieldFill.INSERT)
+    private Date uRegiTime;
 
     /**
      * 更新时间
      */
-    @TableField("uUpdateTime")
-    private LocalDateTime uUpdateTime;
+    @TableField(value = "uUpdateTime", fill = FieldFill.INSERT_UPDATE)
+    private Date uUpdateTime;
 
     /**
      * 用户性别
@@ -67,7 +70,7 @@ public class User implements Serializable {
      * 用户生日
      */
     @TableField("uBirth")
-    private LocalDate uBirth;
+    private Date uBirth;
 
     /**
      * 用户手机号

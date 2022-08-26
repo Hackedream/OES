@@ -1,6 +1,7 @@
 package com.wakuwaku.oes5.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.wakuwaku.oes5.entity.Lesson;
 import com.wakuwaku.oes5.entity.User;
 import com.wakuwaku.oes5.mapper.UserMapper;
 import com.wakuwaku.oes5.service.IUserService;
@@ -211,6 +212,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User findByUsername(String username) {
+
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq("username", username);
         User user = userMapper.selectOne(userQueryWrapper);
@@ -222,6 +224,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
         return user;
+
     }
 
     @Override
@@ -317,6 +320,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         /*else {
             return R.error().message("该用户不存在或密码错误！");
         }*/
+    }
+
+    @Override
+    public List<User> findAllByUids(List<Integer> uids) {
+
+        List<User> users = userMapper.selectBatchIds(uids);
+        if (users == null) {
+            try {
+                throw new NotFoundException("未查询到用户！");
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return users;
+
     }
 
 }

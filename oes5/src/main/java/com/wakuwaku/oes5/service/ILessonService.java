@@ -2,6 +2,8 @@ package com.wakuwaku.oes5.service;
 
 import com.wakuwaku.oes5.entity.Lesson;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wakuwaku.oes5.entity.User;
+import com.wakuwaku.oes5.entity.UserLesson;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +29,7 @@ public interface ILessonService extends IService<Lesson> {
     List<Lesson> findAllLessonsOfState(Integer state);
 
     Lesson findByInfo(String info);
+
+    List<Lesson> findAllByLids(List<Integer> lids);
+
 }

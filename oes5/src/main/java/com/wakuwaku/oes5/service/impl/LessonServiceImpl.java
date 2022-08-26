@@ -2,6 +2,7 @@ package com.wakuwaku.oes5.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wakuwaku.oes5.entity.Lesson;
+import com.wakuwaku.oes5.entity.UserLesson;
 import com.wakuwaku.oes5.mapper.LessonMapper;
 import com.wakuwaku.oes5.service.ILessonService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +11,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -113,6 +115,22 @@ public class LessonServiceImpl extends ServiceImpl<LessonMapper, Lesson> impleme
         //通过id查询
         lesson = this.getById(info);
         return lesson;
+
+    }
+
+    @Override
+    public List<Lesson> findAllByLids(List<Integer> lids) {
+
+        List<Lesson> lessons = lessonMapper.selectBatchIds(lids);
+        if (lessons == null) {
+            try {
+                throw new NotFoundException("未查询到课程！");
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return lessons;
 
     }
 

@@ -4,13 +4,12 @@ package com.wakuwaku.oes5.controller;
 import com.wakuwaku.oes5.entity.Indent;
 import com.wakuwaku.oes5.entity.Lesson;
 import com.wakuwaku.oes5.entity.User;
-import com.wakuwaku.oes5.service.IIndentService;
-import com.wakuwaku.oes5.service.ILessonService;
-import com.wakuwaku.oes5.service.IUserService;
+import com.wakuwaku.oes5.service.*;
 import com.wakuwaku.oes5.utils.result.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -31,6 +30,11 @@ public class UserController {
     ILessonService lessonService;
     @Resource
     IIndentService indentService;
+    @Resource
+    IUserLessonService userLessonService;
+    @Resource
+    ICollectLessonsService collectLessonsService;
+
 
     /**
      * 用户注册
@@ -231,13 +235,78 @@ public class UserController {
      */
     @PostMapping("/buyLesson")
     @ResponseBody
-    public R buyLesson(Integer uid, Integer lid) {
+    public R buyLesson(Integer uid, Integer lid, boolean bought) {
 
-        Indent indent = indentService.createIndent(uid, lid);
+        Indent indent = indentService.createIndent(uid, lid, bought);
         if (indent != null) {
-            return R.ok().message("购买成功！").data("Indent", indent);
+            indentService.saveOrUpdate(indent);
+            if (bought) {
+                return R.ok().message("购买成功！").data("Indent", indent);
+            } else {
+                return R.ok().message("支付已取消！");
+            }
         } else {
             return R.error().message("购买失败，请重试！");
+        }
+
+    }
+
+    /**
+     * 已购买课程查询
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getUserLessons")
+    @ResponseBody
+    public R getUserLessons(Integer uid) {
+
+        List<Lesson> lessons = userLessonService.getSameUserLessons(uid);
+        if (lessons != null) {
+            return R.ok().message("购买课程如下：").data("Lessons", lessons);
+        } else {
+            return R.error().message("您未购买任何课程！");
+        }
+
+    }
+
+    /**
+     * 已收藏课程查询
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getCollectLessons")
+    @ResponseBody
+    public R getCollectLessons(Integer uid) {
+
+        List<Lesson> lessons = collectLessonsService.getSameUserLessons(uid);
+        if (lessons != null) {
+            return R.ok().message("收藏课程如下：").data("Lessons", lessons);
+        } else {
+            return R.error().message("您未收藏任何课程！");
+        }
+
+    }
+
+    /**
+     * 已上传课程查询
+     * 仅限讲师操作
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getUploadLessons")
+    @ResponseBody
+    public R getUploadLessons(Integer uid) {
+
+        //判断是否为讲师
+        if (userService.isTeacher(uid)) {
+            List<Lesson> lessons = lessonService.findAllTeacherLessons(uid);
+            if (lessons != null) {
+                return R.ok().message("查询完毕！").data("Lessons", lessons);
+            } else {
+                return R.error().message("您未上传任何课程！");
+            }
+        } else {
+            return R.error().message("您不是讲师！");
         }
 
     }

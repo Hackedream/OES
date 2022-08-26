@@ -1,5 +1,6 @@
 package com.wakuwaku.oes5.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
@@ -117,7 +118,7 @@ public class Lesson implements Serializable {
     /**
      * 课程上传时间
      */
-    @TableField("luTime")
+    @TableField(value = "luTime", fill = FieldFill.INSERT)
     private Date luTime;
 
     /**

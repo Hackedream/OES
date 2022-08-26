@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface IIndentService extends IService<Indent> {
 
-    Indent createIndent(Integer uid, Integer lid);
+    Indent createIndent(Integer uid, Integer lid, boolean bought);
 
     List<Indent> findAllUserIndents(Integer uid);
 

@@ -1,0 +1,49 @@
+# 支付配置
+pay:
+  config:
+    # 最小限制 100 毛栗
+    minLimit: 10
+    # 最小提现金额 10 元
+    minAmountLimit: 1
+    # 最大额度5000 毛栗
+    maxLimit: 5000
+    # 最大提现金额 500 元
+    maxAmountLimit: 500
+    # 最大提现次数限制
+    maxTimes: 3
+    # 提现整倍数限制 (毛栗数)
+    multiple: 10
+    # 提现税率，提现后金额 = 提现金额 * 税率
+    rate: 0.4
+  # 支付宝配置
+  alipay:
+    app-id: ********
+    private-key: *********
+    public-key: **********
+    sign-type: RSA2
+    format: json
+    charset: UTF-8
+    gateway-url: https://openapi.alipay.com/gateway.do
+    # 应用公钥证书路径
+    app-cert-path: crt/alipay/appCertPublicKey.crt
+    # 支付宝公钥证书文件路径
+    alipay-cert-path: crt/alipay/alipayCertPublicKey_RSA2.crt
+    # 支付宝根证书文件路径
+    alipay-root-cert-path: crt/alipay/alipayRootCert.crt
+    # 回调地址
+    return-url: /
+    # 异步地址
+    notify-url: /wallet/pay/notify/alipay
+    # 收款码超时时效 10分钟
+    qr-code-timeout-express: 10m
+  # 微信配置
+  wxpay:
+    appId: *****
+    mchId: *******
+    appKey: *******
+    certPath: crt/wxpay/apiclient_cert.p12
+    keyPath: crt/wxpay/apiclient_key.pem
+    # 最小额度6元，单位为分
+    minLimit: 600
+    # 最大额度60元，单位为分
+    maxLimit: 6000

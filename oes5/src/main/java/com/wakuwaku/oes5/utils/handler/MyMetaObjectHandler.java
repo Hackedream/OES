@@ -14,12 +14,20 @@ import java.util.Date;
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
+
         this.setFieldValByName("uRegiTime",new Date(),metaObject);
         this.setFieldValByName("uUpdateTime",new Date(),metaObject);
+        this.setFieldValByName("inCreateTime", new Date(), metaObject);
+        this.setFieldValByName("inCompleteTime",new Date(),metaObject);
+        this.setFieldValByName("luTime",new Date(),metaObject);
+
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("updateTime",new Date(),metaObject);
+
+        this.setFieldValByName("uUpdateTime",new Date(),metaObject);
+        this.setFieldValByName("inCompleteTime",new Date(),metaObject);
+
     }
 }

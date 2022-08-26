@@ -10,6 +10,7 @@ import com.wakuwaku.oes5.service.ILessonService;
 import com.wakuwaku.oes5.service.IUserService;
 import com.wakuwaku.oes5.service.IWebmasterService;
 import com.wakuwaku.oes5.utils.result.R;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -150,9 +151,11 @@ public class WebmasterController {
         Lesson lesson = lessonService.getById(lid);
         if (pass) {
             lesson.setLState(1);
+            lessonService.saveOrUpdate(lesson);
             return R.ok().message("审核通过！").data("Lesson", lesson);
         } else {
             lesson.setLState(2);
+            lessonService.saveOrUpdate(lesson);
             return R.error().message("审核未通过，请修改后重新提交！");
         }
 
@@ -208,6 +211,41 @@ public class WebmasterController {
             return R.ok().data("Teacher's lessons", lessonService.findAllTeacherLessons(uid));
         } else {
             return R.error().message("该用户不是讲师，请重试！");
+        }
+
+    }
+
+    /**
+     * 通过id删除订单
+     * @param iid
+     * @return
+     */
+    @GetMapping("/delIndent")
+    @ResponseBody
+    public R delIndent(Integer iid) {
+
+        boolean flag = indentService.removeById(iid);
+        if (flag) {
+            return R.ok().message("订单删除成功！");
+        } else {
+            return R.error().message("订单删除失败，请重试！");
+        }
+
+    }
+
+    /**
+     * 删除所有状态为【已取消】的订单
+     * @return
+     */
+    @GetMapping("/clearCancleIndents")
+    @ResponseBody
+    public R clearCancleIndents() {
+
+        boolean flag = lessonService.removeByIds(lessonService.findAllLessonsOfState(2));
+        if (flag) {
+            return R.ok().message("删除成功！");
+        } else {
+            return R.error().message("删除失败！");
         }
 
     }

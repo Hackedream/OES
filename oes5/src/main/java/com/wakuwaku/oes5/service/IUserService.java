@@ -40,4 +40,6 @@ public interface IUserService extends IService<User> {
     User findByInfo(String info);
 
     User login(String account, String password);
+
+    List<User> findAllByUids(List<Integer> uids);
 }

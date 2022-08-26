@@ -1,17 +1,20 @@
 package com.wakuwaku.oes5.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Ania
@@ -69,8 +72,8 @@ public class Indent implements Serializable {
     /**
      * 订单创建时间
      */
-    @TableField("inCreateTime")
-    private LocalDateTime inCreateTime;
+    @TableField(value = "inCreateTime", fill = FieldFill.INSERT)
+    private Date inCreateTime;
 
     /**
      * 订单状态（0为取消支付，1为已支付）
@@ -81,8 +84,8 @@ public class Indent implements Serializable {
     /**
      * 订单完成时间
      */
-    @TableField("inCompleteTime")
-    private LocalDateTime inCompleteTime;
+    @TableField(value = "inCompleteTime", fill = FieldFill.INSERT_UPDATE)
+    private Date inCompleteTime;
 
 
 }
