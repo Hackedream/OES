@@ -54,7 +54,7 @@ CREATE TABLE `checklist` (
   `chuid` int(8) unsigned NOT NULL COMMENT '讲师ID',
   `chuName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '讲师姓名',
   `chTime` datetime DEFAULT NULL COMMENT '审核时间',
-  `chState` tinyint(1) NOT NULL DEFAULT '0' COMMENT '审核状态（0为未通过，1为已通过）',
+  `chState` int(4) NOT NULL DEFAULT '0' COMMENT '审核状态',
   PRIMARY KEY (`chid`),
   KEY `aid` (`chaid`),
   KEY `lid` (`chlid`),
@@ -160,6 +160,9 @@ CREATE TABLE `lesson` (
   `luName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '课程上传者',
   `luTime` datetime DEFAULT NULL COMMENT '课程上传时间',
   `lState` int(4) unsigned NOT NULL DEFAULT '0' COMMENT '课程审核状态',
+  `lPhoto` varchar(200) DEFAULT NULL COMMENT '课程图片路径',
+  `lAudio` varchar(200) DEFAULT NULL COMMENT '课程音频路径',
+  `lVideo` varchar(200) DEFAULT NULL COMMENT '课程视频路径',
   PRIMARY KEY (`lid`),
   KEY `lupid` (`luid`),
   CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`luid`) REFERENCES `user` (`uid`)
@@ -167,7 +170,7 @@ CREATE TABLE `lesson` (
 
 /*Data for the table `lesson` */
 
-insert  into `lesson`(`lid`,`lName`,`lCategory`,`lIntro`,`lInfo`,`lPrice`,`lRank`,`lTime`,`lDiscount`,`lLikeNum`,`lCollectNum`,`luid`,`luName`,`luTime`,`lState`) values (1,'核物理的美学',4,'这是一本有关核物理基础知识的书。',NULL,111.11,1.0,20.0,12.00,23,12,2,'ZY','2022-08-24 09:23:27',1),(2,'高中物理（高一下）',4,'由省级十佳教师倾力打造',NULL,66.66,2.0,66.6,66.00,66,66,1,'LQQ','2022-08-24 09:26:01',1),(3,'十天速通生物（初中）',6,'全面覆盖初中生物的各个知识点，将难点疑点一网打尽',NULL,123.23,4.0,22.3,34.00,34,23,4,'OYY','2022-08-24 09:32:32',0),(4,'高中生物',6,'趣味生动带你学习高中生物',NULL,55.50,9.2,55.5,23.00,3,45,3,'LXH','2022-08-24 09:38:12',0),(5,'语文专项训练',1,'特级教师带你突破语文的各个难关',NULL,666666.66,3.0,66666666666.7,6.00,6,6,3,'LXH','2022-08-24 09:29:13',2);
+insert  into `lesson`(`lid`,`lName`,`lCategory`,`lIntro`,`lInfo`,`lPrice`,`lRank`,`lTime`,`lDiscount`,`lLikeNum`,`lCollectNum`,`luid`,`luName`,`luTime`,`lState`,`lPhoto`,`lAudio`,`lVideo`) values (1,'核物理的美学',4,'这是一本有关核物理基础知识的书。',NULL,111.11,1.0,20.0,12.00,23,12,2,'卓阳','2022-08-24 09:23:27',1,NULL,NULL,NULL),(2,'高中物理（高一下）',4,'由省级十佳教师倾力打造',NULL,66.66,2.0,66.6,66.00,66,66,1,'刘清泉','2022-08-24 09:26:01',1,NULL,NULL,NULL),(3,'十天速通生物（初中）',6,'全面覆盖初中生物的各个知识点，将难点疑点一网打尽',NULL,123.23,4.0,22.3,34.00,34,23,4,'欧阳毅','2022-08-24 09:32:32',0,NULL,NULL,NULL),(4,'高中生物',6,'趣味生动带你学习高中生物',NULL,55.50,9.2,55.5,23.00,3,45,3,'骆小会','2022-08-24 09:38:12',0,NULL,NULL,NULL),(5,'语文专项训练',1,'特级教师带你突破语文的各个难关',NULL,666666.66,3.0,66666666666.7,6.00,6,6,3,'骆小会','2022-08-24 09:29:13',2,NULL,NULL,NULL);
 
 /*Table structure for table `question` */
 
@@ -192,20 +195,6 @@ CREATE TABLE `question` (
 
 insert  into `question`(`qid`,`quid`,`qUsername`,`qContent`,`qTime`,`qLikeNum`,`qCollectNum`,`qlid`,`qlName`) values (1,1,'LQQ','为什么我没有npy？','2022-08-24 08:56:26',0,0,1,'核物理的美学'),(2,2,'ZY','为什么LQQ没有npy？','2022-08-24 08:59:59',0,0,2,'高中物理（高一下）'),(3,3,'LXH','为什么大雁要迁徙？','2022-08-24 09:04:20',0,0,3,'10天速通生物（初中）'),(4,4,'OYY','病毒依靠什么传播？','2022-08-24 09:06:16',0,0,4,'高中生物');
 
-/*Table structure for table `searchlist` */
-
-DROP TABLE IF EXISTS `searchlist`;
-
-CREATE TABLE `searchlist` (
-  `sid` int(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '搜索人ID',
-  `sKeyword` varchar(120) NOT NULL COMMENT '关键词',
-  `sTime` datetime DEFAULT NULL COMMENT '搜索时间',
-  PRIMARY KEY (`sid`),
-  CONSTRAINT `searchlist_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `user` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `searchlist` */
-
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
@@ -221,18 +210,20 @@ CREATE TABLE `user` (
   `uTel` varchar(16) NOT NULL COMMENT '用户手机号',
   `uEmail` varchar(32) DEFAULT NULL COMMENT '用户邮箱',
   `uPassword` varchar(16) NOT NULL DEFAULT '123456' COMMENT '用户密码',
+  `uPortrait` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户头像路径',
   `uBalance` double(12,2) DEFAULT '0.00' COMMENT '用户余额',
+  `uPayPassword` int(6) DEFAULT NULL COMMENT '支付密码',
   `uWatching` double(12,1) DEFAULT '0.0' COMMENT '观看时长',
   `uType` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用户类型',
   `uRank` double(12,1) DEFAULT NULL COMMENT '讲师评分',
   `uLessonNum` int(8) DEFAULT '0' COMMENT '课程数量',
-  `uPayPassword` int(6) DEFAULT NULL COMMENT '支付密码',
+  `uTeacherPhoto` varchar(200) DEFAULT NULL COMMENT '讲师图片路径',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`uid`,`username`,`uName`,`uRegiTime`,`uUpdateTime`,`uGender`,`uBirth`,`uTel`,`uEmail`,`uPassword`,`uBalance`,`uWatching`,`uType`,`uRank`,`uLessonNum`,`uPayPassword`) values (1,'LQQ','刘清泉','2022-08-17 12:05:08','2022-08-22 16:59:03',1,'2022-08-17','15932586495','sdfghjkl@qq.com','123456',99999.99,999.9,1,9.9,99,741852),(2,'ZY','卓阳','2022-08-17 12:06:42','2022-08-22 16:59:06',1,'2022-07-17','13896248632',NULL,'123456',0.00,0.0,0,NULL,0,852741),(3,'LXH','骆小会','2022-08-17 12:07:38','2022-08-22 16:59:08',0,'2022-06-17','18368495219',NULL,'123456',12345.67,987.6,0,NULL,0,741963),(4,'OYY','欧阳毅','2022-08-17 12:08:33','2022-08-22 16:59:10',1,'2022-05-17','18092195626',NULL,'123456',0.00,0.0,0,NULL,0,852963),(6,'asd','ASD','2022-08-22 10:50:47','2022-08-22 10:50:47',0,'2002-07-05','14765984258','abgsdiuk@165.com','asdfghjkl',0.00,0.0,0,0.0,0,654987),(7,'Qiqi','七七','2022-08-25 01:40:42','2022-08-25 01:40:42',0,'2017-07-07','15977777777','QIQI@Genshin.com','zuiaiheyenai',7777.77,77.7,0,0.0,0,777777);
+insert  into `user`(`uid`,`username`,`uName`,`uRegiTime`,`uUpdateTime`,`uGender`,`uBirth`,`uTel`,`uEmail`,`uPassword`,`uPortrait`,`uBalance`,`uPayPassword`,`uWatching`,`uType`,`uRank`,`uLessonNum`,`uTeacherPhoto`) values (1,'LQQ','刘清泉','2022-08-17 12:05:08','2022-08-26 11:20:08',1,'2022-08-16','15932586495','sdfghjkl@qq.com','123456','H:\\workspace\\oes_resource\\user_portrait\\QQ图片20210126123954.jpg',99999.99,741852,999.9,1,9.9,99,NULL),(2,'ZY','卓阳','2022-08-17 12:06:42','2022-08-22 16:59:06',1,'2022-07-17','13896248632',NULL,'123456',NULL,0.00,852741,0.0,0,NULL,0,NULL),(3,'LXH','骆小会','2022-08-17 12:07:38','2022-08-22 16:59:08',0,'2022-06-17','18368495219',NULL,'123456',NULL,12345.67,741963,987.6,0,NULL,0,NULL),(4,'OYY','欧阳毅','2022-08-17 12:08:33','2022-08-22 16:59:10',1,'2022-05-17','18092195626',NULL,'123456',NULL,0.00,852963,0.0,0,NULL,0,NULL),(6,'asd','ASD','2022-08-22 10:50:47','2022-08-22 10:50:47',0,'2002-07-05','14765984258','abgsdiuk@165.com','asdfghjkl',NULL,0.00,654987,0.0,0,0.0,0,NULL),(7,'Qiqi','七七','2022-08-25 01:40:42','2022-08-25 01:40:42',0,'2017-07-07','15977777777','QIQI@Genshin.com','zuiaiheyenai',NULL,7777.77,777777,77.7,0,0.0,0,NULL);
 
 /*Table structure for table `user_lesson` */
 
