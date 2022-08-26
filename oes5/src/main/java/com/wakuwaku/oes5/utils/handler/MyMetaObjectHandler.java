@@ -20,6 +20,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("inCreateTime", new Date(), metaObject);
         this.setFieldValByName("inCompleteTime",new Date(),metaObject);
         this.setFieldValByName("luTime",new Date(),metaObject);
+        this.setFieldValByName("chTime",new Date(),metaObject);
 
     }
 

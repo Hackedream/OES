@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IChecklistService extends IService<Checklist> {
 
+    Checklist addCheckList(Integer wid, Integer lid, boolean pass);
 }

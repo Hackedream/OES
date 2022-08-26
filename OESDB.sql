@@ -68,6 +68,23 @@ CREATE TABLE `checklist` (
 
 insert  into `checklist`(`chid`,`chaid`,`chaName`,`chlid`,`chlName`,`chuid`,`chuName`,`chTime`,`chState`) values (1,1,'LQQ',3,NULL,3,NULL,'2022-08-24 16:32:45',1);
 
+/*Table structure for table `collect_lessons` */
+
+DROP TABLE IF EXISTS `collect_lessons`;
+
+CREATE TABLE `collect_lessons` (
+  `uid` int(8) unsigned NOT NULL COMMENT '用户id',
+  `lid` int(8) unsigned NOT NULL COMMENT '课程id',
+  KEY `uid` (`uid`),
+  KEY `lid` (`lid`),
+  CONSTRAINT `collect_lessons_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`),
+  CONSTRAINT `collect_lessons_ibfk_2` FOREIGN KEY (`lid`) REFERENCES `lesson` (`lid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `collect_lessons` */
+
+insert  into `collect_lessons`(`uid`,`lid`) values (1,2),(4,2),(1,3),(1,1),(7,3);
+
 /*Table structure for table `comment` */
 
 DROP TABLE IF EXISTS `comment`;
@@ -109,6 +126,7 @@ CREATE TABLE `indent` (
   `inCreateTime` datetime DEFAULT NULL COMMENT '订单创建时间',
   `inState` tinyint(1) NOT NULL DEFAULT '0' COMMENT '订单状态（0为取消支付，1为已支付）',
   `inCompleteTime` datetime DEFAULT NULL COMMENT '订单完成时间',
+  `inAlipayTradeNo` varchar(64) DEFAULT NULL COMMENT '支付宝交易流水号',
   PRIMARY KEY (`inid`),
   KEY `osalerid` (`inStuID`),
   KEY `obuyerid` (`inTeaID`),
@@ -116,11 +134,11 @@ CREATE TABLE `indent` (
   CONSTRAINT `indent_ibfk_1` FOREIGN KEY (`inStuID`) REFERENCES `user` (`uid`),
   CONSTRAINT `indent_ibfk_2` FOREIGN KEY (`inTeaID`) REFERENCES `user` (`uid`),
   CONSTRAINT `indent_ibfk_3` FOREIGN KEY (`inlid`) REFERENCES `lesson` (`lid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `indent` */
 
-insert  into `indent`(`inid`,`inStuID`,`inStuUsername`,`inTeaID`,`inTeaUsername`,`inlid`,`inlName`,`inCreateTime`,`inState`,`inCompleteTime`) values (1,2,'ZY',1,'LQQ',1,'核物理的美学','2022-08-24 09:42:09',1,'2022-08-24 09:42:19'),(2,1,'LQQ',2,'ZY',2,'高中物理（高一下）','2022-08-24 09:43:12',3,'2022-08-24 09:43:16'),(3,3,'LXH',1,'LQQ',1,'核物理的美学','2022-08-24 09:52:24',2,'2022-08-25 09:52:29'),(4,4,'OYY',3,'LXH',5,'语文专项训练','2022-08-24 09:53:25',2,'2022-08-26 09:53:30');
+insert  into `indent`(`inid`,`inStuID`,`inStuUsername`,`inTeaID`,`inTeaUsername`,`inlid`,`inlName`,`inCreateTime`,`inState`,`inCompleteTime`,`inAlipayTradeNo`) values (1,2,'ZY',1,'LQQ',1,'核物理的美学','2022-08-24 09:42:09',1,'2022-08-24 09:42:19',NULL),(2,1,'LQQ',2,'ZY',2,'高中物理（高一下）','2022-08-24 09:43:12',2,'2022-08-24 09:43:16',NULL),(3,3,'LXH',1,'LQQ',1,'核物理的美学','2022-08-24 09:52:24',2,'2022-08-25 09:52:29',NULL),(4,4,'OYY',3,'LXH',5,'语文专项训练','2022-08-24 09:53:25',2,'2022-08-26 09:53:30',NULL),(7,7,'Qiqi',1,'LQQ',2,'高中物理（高一下）','2022-08-26 03:51:06',1,'2022-08-26 03:51:06',NULL);
 
 /*Table structure for table `lesson` */
 
@@ -223,8 +241,6 @@ DROP TABLE IF EXISTS `user_lesson`;
 CREATE TABLE `user_lesson` (
   `uid` int(8) unsigned NOT NULL COMMENT '用户id',
   `lid` int(8) unsigned NOT NULL COMMENT '课程id',
-  `vulid` int(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  PRIMARY KEY (`vulid`),
   KEY `uid` (`uid`),
   KEY `lid` (`lid`),
   CONSTRAINT `user_lesson_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`),
@@ -232,6 +248,8 @@ CREATE TABLE `user_lesson` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_lesson` */
+
+insert  into `user_lesson`(`uid`,`lid`) values (1,1),(4,1),(1,2),(1,3),(2,1),(7,1);
 
 /*Table structure for table `webmaster` */
 

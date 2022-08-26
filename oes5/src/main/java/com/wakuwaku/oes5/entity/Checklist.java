@@ -1,5 +1,6 @@
 package com.wakuwaku.oes5.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Ania
@@ -69,7 +70,7 @@ public class Checklist implements Serializable {
     /**
      * 审核时间
      */
-    @TableField("chTime")
+    @TableField(value = "chTime", fill = FieldFill.INSERT)
     private LocalDateTime chTime;
 
     /**

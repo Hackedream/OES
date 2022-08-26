@@ -1,19 +1,18 @@
 package com.wakuwaku.oes5.controller;
 
 
-import com.wakuwaku.oes5.entity.Indent;
-import com.wakuwaku.oes5.entity.Lesson;
-import com.wakuwaku.oes5.entity.User;
-import com.wakuwaku.oes5.entity.Webmaster;
-import com.wakuwaku.oes5.service.IIndentService;
-import com.wakuwaku.oes5.service.ILessonService;
-import com.wakuwaku.oes5.service.IUserService;
-import com.wakuwaku.oes5.service.IWebmasterService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wakuwaku.oes5.entity.*;
+import com.wakuwaku.oes5.service.*;
 import com.wakuwaku.oes5.utils.result.R;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -35,6 +34,8 @@ public class WebmasterController {
     IIndentService indentService;
     @Resource
     ILessonService lessonService;
+    @Resource
+    IChecklistService checklistService;
 
     /**
      * 管理员登录
@@ -135,20 +136,26 @@ public class WebmasterController {
     @ResponseBody
     public R getUsers() {
 
-        return R.ok().data("Users", userService.findAllUsers());
+        Page page = new Page(1, 3);
+        Page page1 = (Page) userService.page(page);
+        List<Page> list = new ArrayList<>();
+        list.add(page1);
+        return R.ok().data("Users", list);
 
     }
 
     /**
      * 课程审核
+     * 审核记录
      * @param pass
      * @return
      */
     @PostMapping("/checkLesson")
     @ResponseBody
-    public R checkLesson(Integer lid, boolean pass) {
+    public R checkLesson(Integer wid, Integer lid, boolean pass) {
 
         Lesson lesson = lessonService.getById(lid);
+        Checklist checklist = checklistService.addCheckList(wid, lid, pass);
         if (pass) {
             lesson.setLState(1);
             lessonService.saveOrUpdate(lesson);
