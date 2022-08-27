@@ -1,0 +1,214 @@
+{
+  "groups": [
+    {
+      "name": "pay.alipay",
+      "type": "com.wakuwaku.oes5.entity.AlipayProperties",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.config",
+      "type": "com.wakuwaku.oes5.config.PayConfig",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.wxpay",
+      "type": "com.wakuwaku.oes5.config.WechatPayConfig",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "spring.datasource.druid",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.wakuwaku.oes5.config.MyBatisPlusConfig",
+      "sourceMethod": "druidDataSource()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "pay.alipay.alipay-cert-path",
+      "type": "java.lang.String",
+      "description": "支付宝公钥证书文件路径",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.alipay-root-cert-path",
+      "type": "java.lang.String",
+      "description": "支付宝CA根证书文件路径",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.app-cert-path",
+      "type": "java.lang.String",
+      "description": "应用公钥证书路径",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.app-id",
+      "type": "java.lang.String",
+      "description": "支付宝 app-id",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.cancel-duration",
+      "type": "java.lang.Long",
+      "description": "撤销间隔（毫秒）",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.charset",
+      "type": "java.lang.String",
+      "description": "格式",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.format",
+      "type": "java.lang.String",
+      "description": "格式",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.gateway-url",
+      "type": "java.lang.String",
+      "description": "支付宝网关",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.max-cancel-retry",
+      "type": "java.lang.Integer",
+      "description": "最大撤销次数",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.max-query-retry",
+      "type": "java.lang.Integer",
+      "description": "最大查询次数",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.notify-url",
+      "type": "java.lang.String",
+      "description": "异步地址",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.private-key",
+      "type": "java.lang.String",
+      "description": "支付宝 私钥",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.publickey",
+      "type": "java.lang.String",
+      "description": "支付宝公钥",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.qr-code-timeout-express",
+      "type": "java.lang.String",
+      "description": "收款码时效时间",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.query-duration",
+      "type": "java.lang.Long",
+      "description": "查询间隔（毫秒）",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.return-url",
+      "type": "java.lang.String",
+      "description": "回调地址",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.alipay.sign-type",
+      "type": "java.lang.String",
+      "description": "支付宝 签名类型",
+      "sourceType": "com.wakuwaku.oes5.entity.AlipayProperties"
+    },
+    {
+      "name": "pay.config.max-amount-limit",
+      "type": "java.lang.String",
+      "description": "最大提现金额",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.max-limit",
+      "type": "java.lang.Integer",
+      "description": "最大提现额度",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.max-times",
+      "type": "java.lang.Integer",
+      "description": "最大提现次数限制",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.min-amount-limit",
+      "type": "java.lang.String",
+      "description": "最小提现金额",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.min-limit",
+      "type": "java.lang.Integer",
+      "description": "最小提现额度",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.multiple",
+      "type": "java.lang.Integer",
+      "description": "提现整倍数限制",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.config.rate",
+      "type": "java.lang.String",
+      "description": "提现税率，提现后金额 = 提现金额 * 税率",
+      "sourceType": "com.wakuwaku.oes5.config.PayConfig"
+    },
+    {
+      "name": "pay.wxpay.app-id",
+      "type": "java.lang.String",
+      "description": "应用id，appId",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.app-key",
+      "type": "java.lang.String",
+      "description": "秘钥",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.cert-path",
+      "type": "java.lang.String",
+      "description": "证书路径",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.key-path",
+      "type": "java.lang.String",
+      "description": "key路径",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.max-limit",
+      "type": "java.lang.Integer",
+      "description": "最大提现额度",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.mch-id",
+      "type": "java.lang.String",
+      "description": "商户id",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    },
+    {
+      "name": "pay.wxpay.min-limit",
+      "type": "java.lang.Integer",
+      "description": "最小提现额度",
+      "sourceType": "com.wakuwaku.oes5.config.WechatPayConfig"
+    }
+  ],
+  "hints": []
+}
